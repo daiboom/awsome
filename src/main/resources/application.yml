@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: awsome
+
+server:
+  port: 8088
+
+logging:
+  level:
+    org.startlight.awsome: DEBUG
