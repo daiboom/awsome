@@ -1,9 +1,13 @@
 package org.startlight.awsome.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -35,9 +39,15 @@ public class UserController {
   }
 
   @GetMapping("/users/{id}")
-  public ResponseEntity<User> findOne(@PathVariable int id) {
+  public EntityModel<User> findOne(@PathVariable int id) {
     User user = requireUser(id);
-    return ResponseEntity.ok(user);
+
+    EntityModel<User> entityModel = EntityModel.of(user);
+
+    entityModel.add(linkTo(methodOn(UserController.class).findAll()).withRel("all-users"));
+    entityModel.add(linkTo(methodOn(UserController.class).findOne(id)).withSelfRel());
+
+    return entityModel;
   }
 
   @PostMapping("/users")
@@ -66,7 +76,7 @@ public class UserController {
     return ResponseEntity.ok(updatedUser);
   }
 
-  private User requireUser(int id) {
+  private @NonNull User requireUser(int id) {
     User user = userDaoService.findOne(id);
     if (user == null) {
       throw new UserNotFoundException(String.format("ID[%s] not found", id));

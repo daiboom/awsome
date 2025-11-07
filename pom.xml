@@ -81,6 +81,11 @@
             <!-- 스프링부트에서 버전 관리하도록 한다 -->
             <!-- <version>2.18.3</version> -->
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
