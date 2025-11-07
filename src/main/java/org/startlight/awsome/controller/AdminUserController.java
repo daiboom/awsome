@@ -29,7 +29,10 @@ public class AdminUserController {
     }
 
     // /admin/users/{id}
-    @GetMapping("/v1/users/{id}")
+    // @GetMapping("/v1/users/{id}")
+    // @GetMapping(value = "/users/{id}", params = "version=1")
+    // @GetMapping(value = "/users/{id}", headers = "X-API-VERSION=1")
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv1+json")
     public MappingJacksonValue findOne(@PathVariable int id) {
         User user = userDaoService.findOne(id);
 
@@ -51,7 +54,10 @@ public class AdminUserController {
     }
 
     // /admin/users
-    @GetMapping("/v1/users")
+    // @GetMapping("/v1/users")
+    // @GetMapping(value = "/v1/users", params = "version=1")
+    // @GetMapping(value = "/users", headers = "X-API-VERSION=1")
+    @GetMapping(value = "/users", produces = "application/vnd.company.appv1+json")
     public MappingJacksonValue findAll() {
         List<User> users = userDaoService.findAll();
 
@@ -73,7 +79,10 @@ public class AdminUserController {
     }
 
     // /admin/v2/users/{id}
-    @GetMapping("/v2/users/{id}")
+    // @GetMapping("/v2/users/{id}")
+    // @GetMapping(value = "/users/{id}", params = "version=2")
+    // @GetMapping(value = "/users/{id}", headers = "X-API-VERSION=2")
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv2+json")
     public MappingJacksonValue findOneV2(@PathVariable int id) {
         User user = userDaoService.findOne(id);
 
@@ -97,7 +106,10 @@ public class AdminUserController {
     }
 
     // /admin/v2/users
-    @GetMapping("/v2/users")
+    // @GetMapping("/v2/users")
+    // @GetMapping(value = "/users", params = "version=2")
+    // @GetMapping(value = "/users", headers = "X-API-VERSION=2")
+    @GetMapping(value = "/users", produces = "application/vnd.company.appv2+json")
     public MappingJacksonValue findAllV2() {
         List<User> users = userDaoService.findAll();
         List<AdminUserV2> adminUsers = new ArrayList<>();
