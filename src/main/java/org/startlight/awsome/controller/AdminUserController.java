@@ -1,5 +1,8 @@
 package org.startlight.awsome.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +44,28 @@ public class AdminUserController {
     FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
 
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(adminUser);
+    mappingJacksonValue.setFilters(filters);
+
+    return mappingJacksonValue;
+  }
+
+  // /admin/users
+  @GetMapping("/users")
+  public MappingJacksonValue findAll() {
+    List<User> users = userDaoService.findAll();
+
+    List<AdminUser> adminUsers = new ArrayList<>();
+
+    for (User user : users) {
+      AdminUser adminUser = new AdminUser();
+      BeanUtils.copyProperties(user, adminUser);
+      adminUsers.add(adminUser);
+    }
+
+    SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "joinDate", "ssn");
+    FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(adminUsers);
     mappingJacksonValue.setFilters(filters);
 
     return mappingJacksonValue;
