@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { org.springdoc.core.configuration.SpringDocHateoasConfiguration.class })
 public class AwsomeApplication {
 
     public static void main(String[] args) {
