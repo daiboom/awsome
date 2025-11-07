@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.startlight.awsome.bean.User;
 import org.startlight.awsome.dao.UserDaoService;
+import org.startlight.awsome.exception.UserNotFoundException;
 
 @RestController
 public class UserController {
@@ -35,11 +36,7 @@ public class UserController {
 
   @GetMapping("/users/{id}")
   public ResponseEntity<User> findOne(@PathVariable int id) {
-    User user = userDaoService.findOne(id);
-    if (user == null) {
-      return ResponseEntity.notFound().build();
-    }
-
+    User user = requireUser(id);
     return ResponseEntity.ok(user);
   }
 
@@ -57,21 +54,24 @@ public class UserController {
 
   @DeleteMapping("/users/{id}")
   public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-    User user = userDaoService.findOne(id);
-    if (user == null) {
-      return ResponseEntity.notFound().build();
-    }
+    User user = requireUser(id);
     userDaoService.delete(user);
     return ResponseEntity.noContent().build();
   }
 
   @PatchMapping("/users/{id}")
   public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
+    requireUser(id);
     User updatedUser = userDaoService.update(id, user);
-    if (updatedUser == null) {
-      return ResponseEntity.notFound().build();
-    }
     return ResponseEntity.ok(updatedUser);
+  }
+
+  private User requireUser(int id) {
+    User user = userDaoService.findOne(id);
+    if (user == null) {
+      throw new UserNotFoundException(String.format("ID[%s] not found", id));
+    }
+    return user;
   }
 
 }
