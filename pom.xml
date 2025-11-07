@@ -74,6 +74,13 @@
             <artifactId>spring-boot-starter-validation</artifactId>
             <version>3.5.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <!-- 스프링부트에서 버전 관리하도록 한다 -->
+            <!-- <version>2.18.3</version> -->
+        </dependency>
     </dependencies>
 
     <build>
