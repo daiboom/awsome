@@ -18,3 +18,9 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # 현재 개발상 모든 엔드포인트를 노출하고 있으나, 릴리즈시 보안상 문제로 제한하여야한다.
