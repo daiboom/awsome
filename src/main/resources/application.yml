@@ -1,6 +1,8 @@
 spring:
   application:
     name: awsome
+  messages:
+    basename: i18n/messages
 
 server:
   port: 8088
