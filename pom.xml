@@ -106,6 +106,12 @@
             <artifactId>spring-data-rest-hal-explorer</artifactId>
         </dependency>
 
+        <!-- 인증정보처리 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
 
     </dependencies>
 

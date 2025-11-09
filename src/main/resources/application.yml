@@ -3,13 +3,17 @@ spring:
     name: awsome
   messages:
     basename: i18n/messages
+  # security:
+  #   user:
+  #     name: username
+  #     password: passw0rd
 
 server:
   port: 8088
 
 logging:
   level:
-    org.startlight.awsome: DEBUG
+    "org.startlight.awsome": DEBUG
 
 springdoc:
   api-docs:
