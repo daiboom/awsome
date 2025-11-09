@@ -5,6 +5,11 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -13,10 +18,14 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Schema(description = "User 도메인 객체")
+@Entity
+@Table(name = "users")
 // @JsonIgnoreProperties(value = { "password", "ssn" }) 상위에서 처리 가능
 public class User {
 
   @Schema(title = "ID", description = "ID", example = "1")
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Schema(title = "이름", description = "이름", example = "홍길동")
