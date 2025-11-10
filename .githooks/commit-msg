@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# 커밋 메시지 컨벤션 검사
+# 형식: <type>(<scope>): <subject>
+#
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# 커밋 메시지 형식 검사
+# 형식: <type>(<scope>): <subject>
+if ! echo "$commit_msg" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf|ci|build)(\([^)]+\))?: .+'; then
+    echo "❌ 커밋 메시지 컨벤션 위반!"
+    echo ""
+    echo "현재 커밋 메시지:"
+    echo "$commit_msg"
+    echo ""
+    echo "올바른 커밋 메시지 형식:"
+    echo "  <type>(<scope>): <subject>"
+    echo ""
+    echo "Type:"
+    echo "  - feat: 새로운 기능 추가"
+    echo "  - fix: 버그 수정"
+    echo "  - docs: 문서 수정"
+    echo "  - style: 코드 포맷팅"
+    echo "  - refactor: 코드 리팩토링"
+    echo "  - test: 테스트 코드"
+    echo "  - chore: 빌드 업무"
+    echo "  - perf: 성능 개선"
+    echo "  - ci: CI/CD 설정"
+    echo "  - build: 빌드 시스템"
+    echo ""
+    echo "예시:"
+    echo "  feat(controller): 사용자 목록 페이지네이션 추가"
+    echo "  fix(repository): 사용자 id 필드 누락 문제 수정"
+    echo "  docs(readme): README에 빌드 방법 추가"
+    echo ""
+    exit 1
+fi
+
+# Subject가 비어있는지 검사
+subject=$(echo "$commit_msg" | head -n1 | sed 's/^[^:]*: *//')
+if [ -z "$subject" ]; then
+    echo "❌ 커밋 메시지 subject가 비어있습니다!"
+    exit 1
+fi
+
+# Subject가 50자를 초과하는지 검사
+if [ ${#subject} -gt 50 ]; then
+    echo "⚠️  커밋 메시지 subject가 50자를 초과합니다. (현재: ${#subject}자)"
+    echo "   가능하면 50자 이내로 작성해주세요."
+fi
+
+echo "✅ 커밋 메시지 컨벤션 준수"
+exit 0
+
