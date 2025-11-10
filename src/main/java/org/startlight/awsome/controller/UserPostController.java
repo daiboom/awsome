@@ -17,18 +17,17 @@ public class UserPostController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-    public UserPostController(UserRepository userRepository, PostRepository postRepository) {
+    public UserPostController(UserRepository userRepository,
+            PostRepository postRepository) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
     }
 
     @GetMapping("/user/{id}/posts")
     public ResponseEntity<List<Post>> findUserPosts(@PathVariable int id) {
-        userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(
-                        String.format("ID[%s] not found", id)));
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(
+                String.format("ID[%s] not found", id)));
         List<Post> posts = postRepository.findByUserId(id);
         return ResponseEntity.ok(posts);
     }
 }
-
