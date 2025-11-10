@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.startlight.awsome.bean.Post;
 import org.startlight.awsome.bean.User;
 import org.startlight.awsome.dto.PageResponse;
 import org.startlight.awsome.exception.UserNotFoundException;
+import org.startlight.awsome.repository.PostRepository;
 import org.startlight.awsome.repository.UserRepository;
 
 @RestController
@@ -34,9 +36,12 @@ import org.startlight.awsome.repository.UserRepository;
 public class UserJpaController {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
-    public UserJpaController(UserRepository userRepository) {
+    public UserJpaController(UserRepository userRepository,
+            PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/users")
@@ -177,5 +182,12 @@ public class UserJpaController {
                 linkTo(methodOn(UserJpaController.class).findOne(user.getId()))
                         .withSelfRel());
         return entityModel;
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable int id) {
+        requireUser(id);
+        List<Post> posts = postRepository.findByUserId(id);
+        return ResponseEntity.ok(posts);
     }
 }

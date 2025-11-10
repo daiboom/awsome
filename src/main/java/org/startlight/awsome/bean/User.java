@@ -1,6 +1,7 @@
 package org.startlight.awsome.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -45,4 +47,8 @@ public class User {
   @Schema(title = "주민번호", description = "주민번호")
   @JsonIgnore
   private String ssn;
+
+  @OneToMany(mappedBy = "user")
+  @JsonIgnore
+  private List<Post> posts;
 }
