@@ -236,16 +236,6 @@ src/
 
 이 프로젝트는 개인 학습 및 개발 목적으로 작성되었습니다.
 
-### Git Hooks 설정
-
-커밋 메시지와 브랜치 네이밍 컨벤션을 자동으로 검사하는 Git Hooks를 사용합니다.
-설정 방법은 [SETUP_GIT_HOOKS.md](SETUP_GIT_HOOKS.md)를 참고하세요.
-
-```bash
-# Maven 빌드 시 자동으로 Git Hooks 설치
-./mvnw clean install
-```
-
 ## 👤 작성자
 
 Startlight(Daiboom)
