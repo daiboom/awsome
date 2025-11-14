@@ -40,11 +40,9 @@ public class User {
   @Past(message = "등록일은 미래 날짜일 수 없습니다.")
   private Date joinDate;
 
-  @Schema(title = "비밀번호", description = "비밀번호")
   @JsonIgnore
   private String password;
 
-  @Schema(title = "주민번호", description = "주민번호")
   @JsonIgnore
   private String ssn;
 

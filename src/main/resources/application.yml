@@ -20,6 +20,10 @@ spring:
       enabled: true
       settings:
         web-allow-others: true
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: none
   # security:
   #   user:
   #     name: username
@@ -39,6 +43,13 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  show-actuator: false
+  use-management-port: false
+  model-and-view-allowed: false
+  write-only-properties: false
+  paths-to-exclude: /profile/**,/explorer/**
 
 management:
   endpoints:
